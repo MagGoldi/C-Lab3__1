@@ -7,15 +7,15 @@
 #define PI 3.14159265    
 using namespace std;
 
-void menu(int c) {
-	system("CLS");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((1 / c) * (c / 1)), "1. Create polyline\n");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((2 / c) * (c / 2)), "2. Create a polyline that is the sum of two polylines\n");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((3 / c) * (c / 3)), "3. Add a vertex to the end of a polyline\n");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((4 / c) * (c / 4)), "4. Add a vertex to the beginning of the polyline\n");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((5 / c) * (c / 5)), "5. Add vertices from another polyline to the end of a polyline\n");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((6 / c) * (c / 6)), "6. Change vertex to some polyline\n");
-	printf("\x1b[%dm%s\x1b[0m", 37 - 5 * ((7 / c) * (c / 7)), "7. Do an extra task\n");
+
+void PrintMenu1() {
+	cout << "1. Create polyline\n";
+	cout << "2. Create a polyline that is the sum of two polylines\n";
+	cout << "3. Add a vertex to the end of a polyline\n";
+	cout << "4. Add a vertex to the beginning of the polyline\n";
+	cout << "5. Add vertices from another polyline to the end of a polyline\n";
+	cout << "6. Change vertex to some polyline\n";
+	cout << "7. Do an extra task\n";
 }
 
 short get_key() {
@@ -27,20 +27,9 @@ short get_key() {
 	}
 }
 
-void keyboard(int* c, int* key) {
-	*key = 0;
-	short k = get_key();
-	if (k == 72) (*c)--;
-	if (k == 80) (*c)++;
-	if (k == 13) (*key)++;
-	if (k == 27) {
-		(*key)--;
-		*c = 1;
-	}
-}
 
 void allocate(Broken** arr, int* size) {
-	*size += 4;
+	*size += 20;
 	*arr = new Broken[*size];
 }
 

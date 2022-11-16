@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Class.h"
 #include "functions.h"
+using namespace std;
 
 int main() {
 	int size = 0, n = 0;
@@ -18,56 +19,59 @@ int main() {
 	init_cap(&n, arr);
 	init_polyline(n, arr);
 
-	while (1) {
-		if (current < 1) current = 7; 
-		if (current > 7) current = 1;
-		menu(current);
+	int input;
+	bool in1 = true;
+
+	while (in1) {
+		system("CLS");
+		PrintMenu1();
 		list_line(arr, n);
-		keyboard(&current, &key);
+		cout << "Task number: ";
+		cin >> input;
 
-		try {
-			if (key == -1) break;
-
-			if (key == 1 && current == 1) {
+		switch (input)
+		{
+		case(1): 
+			{
 				if (n >= size) allocate(&arr, &size);
-
 				system("CLS");
 				init_cap(&n, arr);
 				init_polyline(n, arr);
+				break;
 			}
-
-			if (key == 1 && current == 2) {
+		case(2):
+		    {
 				if (n >= size) allocate(&arr, &size);
-
 				item_2_5(&a, &b, n);
 				arr[n] = arr[a] + arr[b];
 				n++;
+				break;
 			}
-
-			if (key == 1 && current == 3) { arr[a] << item_3_4(&a, n); }
-
-			if (key == 1 && current == 4) { arr[a] >> item_3_4(&a, n); }
-
-			if (key == 1 && current == 5) {
+		case(3):
+			{ arr[a] << item_3_4(&a, n);
+			break; }
+		case(4):
+			{ arr[a] >> item_3_4(&a, n); 
+			break; }
+		case(5): {
 				item_2_5(&a, &b, n);
 				printf("\n\nThe variable polyline is the number of the first polyline you enter");
 				arr[a] += arr[b];
+				break;
 			}
-
-			if (key == 1 && current == 6) { 
-				arr[a][b] = item_6(&a, &b, n, arr); 
+		case(6): { 
+				arr[a][b] = item_6(&a, &b, n, arr);
+				break;
 			}
-
-			if (key == 1 && current == 7) { 
+		case(7):{ 
 				if (n >= size) allocate(&arr, &size);
 
 				system("CLS");
 				init_cap(&n, arr);
 				item_7(n, arr);	
+				break;
 			}
 		}
-
-		catch (const char* ex) { printf("%s", ex); }
 	}
 
 	delete[] arr;

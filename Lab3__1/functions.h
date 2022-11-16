@@ -1,4 +1,5 @@
 void menu(int);
+void PrintMenu1();
 short get_key();
 void keyboard(int*, int*);
 void allocate(Broken**, int*);
