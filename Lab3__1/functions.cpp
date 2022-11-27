@@ -1,5 +1,6 @@
 #include "Class.h"
 #include<stdio.h>
+
 #include<windows.h>
 #include<conio.h>
 #include <iostream>
@@ -16,27 +17,27 @@ void PrintMenu1() {
 	cout << "5. Add vertices from another polyline to the end of a polyline\n";
 	cout << "6. Change vertex to some polyline\n";
 	cout << "7. Do an extra task\n";
-}
-
-short get_key() {
-	short key = _getch();
-	cout << key;
-	if (key == 0 || key == 224)
-	{
-		return _getch();
-	}
+	cout << "8. Comparison of vectors via the operator\n";
 }
 
 
 void allocate(Broken** arr, int* size) {
-	*size += 20;
+	*size += 8;      //¬ыдел€ет пам€ть на векторы, обновл€ет
 	*arr = new Broken[*size];
 }
 
 void init_cap(int* n, Broken* arr) {
-	int cap = 50;
+	int cap = 0;    //ѕервый вариант, пользователь сам выдел€ет количество точек в векторе
+	do {
+		printf("Enter the TOTAL number of vertices in the %d polyline (non-negative value): ", *n + 1);
+		scanf_s("%d", &cap);
+	} while (cap <= 0);
 	arr[*n] = Broken(cap);
 	*n += 1;
+
+	/*int cap = 10;           // ¬торой вариант, 
+	arr[*n] = Broken(cap);
+	*n += 1;*/
 }
 
 void init_polyline(const int n, Broken* arr) {
@@ -44,16 +45,16 @@ void init_polyline(const int n, Broken* arr) {
 	Points p = { 0.0, 0.0 };
 
 	do {
-		printf("\nHow many points do you want to set NOW in the %d polyline: ", n);
-		scanf_s("%d", &a);
+		cout<<"\nHow many points do you want to set NOW in the " << n << " polyline: ";
+		cin >> a;
 	} while (a <= 0 || a > arr[n - 1].get_cap());
 	for (int i = 0; i < a; i++) {
-		printf("Enter the %d - th vertex:\n", i + 1);
-		printf("\tEnter x: ");
-		scanf_s("%lf", &p.x);
-		printf("\tEnter y: ");
-		scanf_s("%lf", &p.y);
-		printf("\n");
+		cout << "Enter the " << i + 1 << " - th vertex : \n";
+		cout << "\tEnter x: ";
+		cin >> p.x;
+		cout << "\tEnter y: ";
+		cin >> p.y;
+		cout<<"\n";
 		arr[n - 1][i] = p;
 		arr[n - 1].set_n();
 	}
@@ -106,17 +107,17 @@ Points item_3_4(int* a, int n) {
 
 	system("CLS");
 	do {
-		printf("Select available polyline: ");
-		scanf_s("%d", a);
-		if (*a < 0 || *a > n - 1) printf("Error. You have typed an unavailable polyline number.\n\n");
+		cout<<"Select available polyline: ";
+		cin >> *a;
+		if (*a < 0 || *a > n - 1) cout<<"Error. You have typed an unavailable polyline number.\n\n";
 
 	} while (*a < 0 || *a > n - 1);
 
-	printf("\tEnter x: ");
-	scanf_s("%lf", &p.x);
-	printf("\tEnter y: ");
-	scanf_s("%lf", &p.y);
-	printf("\n");
+	cout<<"\tEnter x: ";
+	cin>>p.x;
+	cout <<"\tEnter y: ";
+	cin >> p.y;
+	cout<<"\n";
 
 	return p;
 }
@@ -124,28 +125,48 @@ Points item_3_4(int* a, int n) {
 void item_2_5(int* a, int* b, int n) {
 	system("CLS");
 	do {
-		printf("Select the FIRST available polyline: ");
-		scanf_s("%d", a);
-		printf("Select the SECOND available polyline: ");
-		scanf_s("%d", b);
-		if (*a < 0 || *a > n - 1 || *b < 0 || *b > n - 1) printf("Error. You have typed an unavailable polyline number.\n\n");
+		cout<<"Select the FIRST available polyline : ";
+		cin >> *a;
+		cout<<"Select the SECOND available polyline : ";
+		cin >> *b;
+		if (*a < 0 || *a > n - 1 || *b < 0 || *b > n - 1) cout<<"Error. You have typed an unavailable polyline number.\n\n";
 
 	} while (*a < 0 || *a > n - 1 || *b < 0 || *b > n - 1);
 
 }
 
+void item_8(int* a, int* b, bool tmp) {
+	int answerd = 0;
+	bool Flag = false;
+	cout << "\nVector comparison" << endl;
+	cout << "\tpolyline number: " << *a<< endl;
+	cout << "\tpolyline number: " << *b<< endl;
+	if (tmp == true){ cout << "Are the vectors the same? - " << "true" << endl; }  //пришлось сделать таким образом так как tmp(bool) в потоке 1 или 0, так просто пон€тнее
+	else cout << "Are the vectors the same? - " << "false" << endl;
+
+	do {
+		cout << "\nExit - 1" << endl;
+		cout << "answerd: ";
+		cin >> answerd;
+		if (answerd == 1 ) { Flag = true; }
+	} while (Flag = false);
+
+}
+
+
+
 void list_line(Broken* arr, int n) {
 	Points p = { 0.0, 0.0 };
 
 	for (int i = 0; i < n; i++) {
-		printf("\nPolyline number %d\n", i + 1);
+		cout<<"\nPolyline number "<< i + 1<< "\n";
 		p = arr[i][0];
-		printf("\tVertex: (%.3lf, %.3lf)", p.x, p.y);
+		cout<<"\tVertex: "<<"("<< p.x <<", " << p.y<<")";
 		for (int j = 1; j < arr[i].get_n(); j++) {
 			p = arr[i][j];
-			printf(" -> (%.3lf, %.3lf)", p.x, p.y);
+			cout<<" -> (" << p.x << ", " << p.y << ")";
 		}
-		printf("\nPolyline length: %.3lf\n\n", arr[i].len_broken());
+		cout<<"\nPolyline length: "<<arr[i].len_broken()<< "\n\n";
 	}
 }
 
@@ -154,18 +175,18 @@ Points item_6(int* a, int* b, int n, Broken* arr) {
 
 	system("CLS");
 	do {
-		printf("In which polyline do you want to change the vertex?: ");
-		scanf_s("%d", a);
-		printf("Which vertex do you want to change?: ");
-		scanf_s("%d", b);
+		cout<<"In which polyline do you want to change the vertex?: ";
+		cin >> *a;
+		cout<<"Which vertex do you want to change?: ";
+		cin >> *b;
 		if (*a < 0 || *b < 0 || *a > n || *b > arr[*a].get_n()) {
-			printf("Error. You entered unreachable values somewhere.\n\n");
+			cout<<"Error. You entered unreachable values somewhere.\n\n";
 		}
 	} while (*a < 0 || *b < 0 || *a > n - 1 || *b > arr[*a].get_n() - 1);
 
-	printf("\nPolyline number %d\n", *a);
+	cout<<"\n"<<"Polyline number "<< *a+1<< "\n";
 	p = arr[*a][0];
-	printf("\tVertex: (%.3lf, %.3lf)\n", p.x, p.y);
+	cout << "\tVertex: " << "(" << p.x << ", " << p.y << ")";
 	int answerd = 0;
 	bool Flag = false;
 	do {
@@ -177,10 +198,10 @@ Points item_6(int* a, int* b, int n, Broken* arr) {
 		if (answerd == 1 or answerd == 2) { Flag = true; }
 	} while (Flag = false);
 	if (answerd == 1) {
-		printf("\tEnter x: ");
-		scanf_s("%lf", &p.x);
-		printf("\tEnter y: ");
-		scanf_s("%lf", &p.y);
+		cout<<"\tEnter x: ";
+	cin>>p.x;
+	cout <<"\tEnter y: ";
+	cin >> p.y;
 		return p;
 	}
 	if (answerd == 2) { }

@@ -84,6 +84,15 @@ void Broken:: operator +=(const Broken& obj) {
 	n += obj.n;
 }
 
+bool Broken:: operator ==(const Broken& obj) {
+	if (n != obj.n) return false;
+	for (int i = 0; i < cap; i++) {
+		if (data[i].x != obj.data[i].x) return false; 
+		if (data[i].y != obj.data[i].y) return false;
+	}
+	return true;
+}
+
 void Broken:: operator <<(const Points& str) {
 	if (cap <= n) memory();
 	data[n++] = str;

@@ -16,6 +16,7 @@ public:
 	double len_broken();
 	Broken operator +(const Broken&);
 	void operator +=(const Broken&);
+	bool operator ==(const Broken&);
 	void operator <<(const Points&);
 	void operator >>(const Points&);
 	Points& operator [](int);

@@ -1,11 +1,9 @@
-void menu(int);
 void PrintMenu1();
-short get_key();
-void keyboard(int*, int*);
 void allocate(Broken**, int*);
 void init_cap(int*, Broken*);
 void init_polyline(const int, Broken*);
 void item_7(const int n, Broken* arr);
+void item_8(int* a, int* b, bool tmp);
 Points item_3_4(int*, int);
 void item_2_5(int*, int*, int);
 void list_line(Broken*, int);
